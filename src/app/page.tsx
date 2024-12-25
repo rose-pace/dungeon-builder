@@ -1,8 +1,6 @@
 'use server';
 
 import React from 'react';
-import DungeonList from './dungeons/components/DungeonList';
-import DungeonServer from './dungeons/components/DungeonServer';
 
 /**
  * Dungeon Builder Home Page.
@@ -10,9 +8,15 @@ import DungeonServer from './dungeons/components/DungeonServer';
  */
 const HomePage = async () => {
   return (
-    <DungeonServer>
-      <DungeonList />
-    </DungeonServer>
+    <>
+      <h1>Welcome to Dungeon Builder</h1>
+      <section>
+        <h2>STATUS: Initial Development</h2>
+        <p>
+          This application is currently under initial development. Please check back later for updates.
+        </p>
+      </section>
+    </>
   );
 };
 
