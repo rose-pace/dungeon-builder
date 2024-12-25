@@ -33,7 +33,7 @@ const DungeonForm: React.FC<DungeonFormProps> = ({ dungeon = {} as Dungeon, onSu
   };
 
   return (
-    <form onSubmit={handleSubmit} className="py-8 px-4 rounded-xl bg-gradient-to-br from-slate-400 dark:from-slate-600">
+    <form onSubmit={handleSubmit} className="py-8 px-4 rounded-xl bg-gradient-to-b from-slate-300 dark:from-zinc-800 from-10% via-zinc-200 dark:via-slate-700 via-50% to-gray-300 dark:to-gray-700 to-90%">
       <Grid columns={2}>
         <FormItem
           label="Name"

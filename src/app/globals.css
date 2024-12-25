@@ -5,7 +5,7 @@
 @layer base {
   /* override default background and form controls */
   body {
-    @apply bg-zinc-100;
+    @apply bg-zinc-200;
     font-family: var(--font-geist-sans);
   }
 
