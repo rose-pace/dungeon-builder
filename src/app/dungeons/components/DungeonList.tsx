@@ -39,7 +39,7 @@ const DungeonList = () => {
   return (
     <>
       <SearchBar searchTerm={searchTerm} onSearch={handleSearch} onSort={handleSort} />
-      <ul>
+      <ul className="list-none ps-0 prose-li:ps-0">
         {dungeons.map(dungeon => (
           <li key={dungeon.id}>
             <Link href={`/dungeons/${dungeon.slug}`}>
