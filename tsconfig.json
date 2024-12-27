@@ -23,6 +23,7 @@
       "@components/*": ["./src/shared-components/*"],
       "@dungeons/*": ["./src/app/dungeons/*"],
       "@server": ["./src/infrastructure/index"],
+      "@constants": ["./src/constants"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

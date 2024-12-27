@@ -39,6 +39,10 @@ const eslintConfig = [
             group: ['**/infrastructure/**', '**/infrastructure'],
             message: 'Do not directly import from infrastructure. User @server instead.',
           },
+          {
+            group: ['@/shared-components/**', '@/shared-components'],
+            message: 'Do not directly import from shared-components. Use @components instead.',
+          },
         ],
       }],
     },
