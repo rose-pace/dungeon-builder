@@ -2,20 +2,37 @@
 
 import React from 'react';
 import DungeonForm from '@/app/dungeons/components/DungeonForm';
-import useLocalStorage from '@/hooks/useLocalStorage';
+import { useDungeonsContext } from '../providers/DungeonsProvider';
+import ResettableForm from '@components/forms/ResettableForm';
+import { sendCreateDungeon } from '../components/DungeonServer';
 import { Dungeon } from '@/types';
 
 const NewDungeonPage = () => {
-  const [, updateDungeons] = useLocalStorage<Dungeon[]>('dungeons', []);
-  const handleSubmit = (dungeonData: Dungeon) => {
-    updateDungeons(dungeons => [...dungeons, dungeonData]);
-    console.log('New dungeon data:', dungeonData);
+  const { dungeonDispatcher } = useDungeonsContext();
+
+  const handleAdd = async (_: Dungeon, formData: FormData) => {
+    const updateState = Object.fromEntries(formData.entries()) as unknown as Dungeon;
+    // update server data
+    await sendCreateDungeon(updateState);
+    // update client data
+    dungeonDispatcher.change(updateState);
+
+    return updateState;
   };
 
   return (
     <div>
       <h1>Create New Dungeon</h1>
-      <DungeonForm onSubmit={handleSubmit} />
+      <ResettableForm
+        render={({ key, resetAction }) =>
+          (
+            <DungeonForm
+              key={key}
+              submitAction={handleAdd}
+              resetAction={resetAction}
+            />
+          )}
+      />
     </div>
   );
 };

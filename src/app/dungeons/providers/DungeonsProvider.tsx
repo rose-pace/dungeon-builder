@@ -2,13 +2,13 @@
 
 import React, { createContext, useContext } from 'react';
 import { useImmerReducer } from 'use-immer';
-import { produce } from 'immer';
-import { Dungeon, DispatchAction } from '@/types';
-import { sendCreateDungeon, sendDeleteDungeon, sendUpdateDungeon } from '../components/DungeonServer';
+import { Dungeon, DispatchAction, Dispatcher } from '@/types';
+import { createDispatcher, createStateSelectors, queryBuilder } from '@/utils';
+import { refreshDungeons } from '../components/DungeonServer';
 
 interface DungeonsContextValue {
-  dungeons: Dungeon[];
-  dungeonActionHandler: (action: DispatchAction<Dungeon>) => Promise<void>;
+  dungeonSelectors: ReturnType<typeof createStateSelectors<Dungeon>>;
+  dungeonDispatcher: Dispatcher<Dungeon>;
 }
 const DungeonsContext = createContext({} as DungeonsContextValue);
 interface DungeonProviderProps {
@@ -32,13 +32,15 @@ const DungeonsProvider = ({ children, dungeons }: DungeonProviderProps) => {
   }, {} as Record<string, Dungeon>);
 
   // Create the dungeons dispatcher
-  const [, dispatch] = useImmerReducer(dungeonReducer, initalState);
+  const [state, dispatch] = useImmerReducer(dungeonReducer, initalState);
+  const dungeonSelectors = createStateSelectors(state);
 
   // Create the dungeon action handler
-  const dungeonActionHandler = (action: DispatchAction<Dungeon>) => storeDungeonChanges(action).then(a => dispatch(a));
+  const dungeonActionSync = buildDungeonActionSync(dispatch);
+  const dungeonDispatcher = createDispatcher(dungeonActionSync);
 
   return (
-    <DungeonsContext.Provider value={{ dungeons, dungeonActionHandler }}>
+    <DungeonsContext.Provider value={{ dungeonSelectors, dungeonDispatcher }}>
       {children}
     </DungeonsContext.Provider>
   );
@@ -46,6 +48,32 @@ const DungeonsProvider = ({ children, dungeons }: DungeonProviderProps) => {
 
 // Default Export
 export default DungeonsProvider;
+
+/**
+ * Create a function that syncs server changes to the reducer.
+ * @param dispatch dispatch function to update the dungeons in the reducer
+ * @returns Promise object that resolves to a function that updates the dungeons in the reducer
+ */
+const buildDungeonActionSync = (dispatch: React.Dispatch<DispatchAction<Dungeon>>) => {
+  return async (action: DispatchAction<Dungeon>): Promise<void> => {
+    // if delete then dispatch the original action, else refresh data from the server
+    if (action.type === 'remove') {
+      dispatch(action);
+      return;
+    }
+
+    // refresh the dungeons
+    const savedDungeon = action.payload as Dungeon;
+    const dungeons = await refreshDungeons(queryBuilder<Dungeon>().any([{ slug: savedDungeon.slug }]).query);
+
+    if (dungeons.length > 0) {
+      dispatch({ type: 'change', payload: dungeons });
+      return;
+    }
+
+    throw new Error('Dungeon not found');
+  };
+};
 
 // Exports
 
@@ -61,69 +89,31 @@ export const useDungeonsContext = () => useContext(DungeonsContext);
  *
  * @param draft - The current state.
  * @param action - The action to apply.
- * @returns The new state.
+ * @returns Only returns state to entirely replace state, else it is void.
  */
 function dungeonReducer(draft: Record<string, Dungeon>, action: DispatchAction<Dungeon>): void | Record<string, Dungeon> {
   const payload = Array.isArray(action.payload) ? action.payload : [action.payload];
   switch (action.type) {
+    // add or change the dungeons in the state
     case 'add':
     case 'change': {
       payload.forEach(dungeon => draft[dungeon.slug] = dungeon);
       return;
     }
     case 'set': {
+      // replace the entire state with the new payload
       return payload.reduce((acc, dungeon) => {
         acc[dungeon.slug] = dungeon;
         return acc;
       }, {} as Record<string, Dungeon>);
     }
     case 'remove': {
-      return Object.keys(draft).reduce((acc, key) => {
-        if (payload.findIndex(dungeon => dungeon.slug === key) === -1) {
-          acc[key] = draft[key];
-        }
-        return acc;
-      }, {} as Record<string, Dungeon>);
+      // remove the dungeons from the state
+      payload.forEach(dungeon => delete draft[dungeon.slug]);
+      return;
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
-}
-
-/**
- * Send dungeon state changes to server.
- *
- * @param action - The action to store.
- * @returns The action with updated payload.
- */
-async function storeDungeonChanges(action: DispatchAction<Dungeon>): Promise<DispatchAction<Dungeon>> {
-  const payload = Array.isArray(action.payload) ? action.payload : [action.payload];
-  const promises = [] as Promise<Dungeon | void>[];
-  switch (action.type) {
-    case 'add': {
-      payload.forEach(dungeon => promises.push(sendCreateDungeon(dungeon)));
-      break;
-    }
-    case 'change': {
-      payload.forEach(dungeon => promises.push(sendUpdateDungeon(dungeon)));
-      break;
-    }
-    case 'remove': {
-      payload.forEach(dungeon => promises.push(sendDeleteDungeon(dungeon)));
-      break;
-    }
-    default: {
-      break;
-    }
-  }
-  const results = await Promise.all(promises);
-  if (action.type === 'add') {
-    // update the action before returning it
-    return produce(action, (draft) => {
-      draft.payload = results.filter((result): result is Dungeon => !!result);
-    });
-  }
-  // return the action for the next step
-  return action;
 }

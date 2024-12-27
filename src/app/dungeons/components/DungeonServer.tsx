@@ -26,15 +26,21 @@ export default DungeonServer;
 
 // Exports
 
+export async function refreshDungeons(criteria: Partial<Dungeon>[] = [], skip?: number, take?: number) {
+  'use server';
+  const dungeons = await dungeonRepository.filter(criteria, skip, take);
+  return dungeons;
+}
+
 /**
  * Server function to create a dungeon.
  *
  * @param dungeon - The dungeon to create.
  * @returns A promise that resolves to the created dungeon.
  */
-export async function sendCreateDungeon(dungeon: Dungeon): Promise<Dungeon> {
+export async function sendCreateDungeon(dungeon: Dungeon): Promise<void> {
   'use server';
-  return await dungeonRepository.create(dungeon);
+  await dungeonRepository.create(dungeon);
 }
 
 /**
@@ -45,7 +51,7 @@ export async function sendCreateDungeon(dungeon: Dungeon): Promise<Dungeon> {
  */
 export async function sendUpdateDungeon(dungeon: Dungeon): Promise<void> {
   'use server';
-  return await dungeonRepository.update(dungeon, [{ id: dungeon.id }]);
+  await dungeonRepository.update(dungeon, [{ id: dungeon.id }]);
 }
 
 /**
@@ -56,5 +62,5 @@ export async function sendUpdateDungeon(dungeon: Dungeon): Promise<void> {
  */
 export async function sendDeleteDungeon(dungeon: Dungeon): Promise<void> {
   'use server';
-  return await dungeonRepository.delete([{ id: dungeon.id }]);
+  await dungeonRepository.delete([{ id: dungeon.id }]);
 }

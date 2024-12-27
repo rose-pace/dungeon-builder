@@ -50,18 +50,18 @@ export default class MockDataSet<T> implements IDataSet<T> {
     return [...this.data];
   }
 
-  async save(entity: T, query?: IQueryParts<T> | undefined): Promise<T> {
+  async save(entity: T, query?: IQueryParts<T> | undefined): Promise<void> {
     if (query) {
       const queryResults = await this.runQuery(query);
       const existingEntity = queryResults.length ? queryResults[0] : null;
-      if (!existingEntity) return entity;
+      if (!existingEntity) return;
 
       const updated = { ...existingEntity, ...entity };
       this.data = this.data.map(item => item === existingEntity ? updated : item);
-      return updated;
+      return;
     }
     this.data = [...this.data, { ...entity, id: (this.data.length + 1).toString() }];
-    return entity;
+    return;
   }
 
   async delete(query: IQueryParts<T>): Promise<void> {

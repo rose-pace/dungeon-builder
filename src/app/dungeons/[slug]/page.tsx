@@ -1,40 +1,30 @@
 'use client';
 
-import React, { Suspense, use, useState } from 'react';
+import React, { use } from 'react';
 import { useRouter } from 'next/navigation';
 import DungeonForm from '../components/DungeonForm';
-import useLocalStorage from '@/hooks/useLocalStorage';
+import { useDungeonsContext } from '../providers/DungeonsProvider';
 import { Dungeon } from '@/types';
-
-// TODO: Switch to dynamic metadata when server and client code is separated
-// export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-//   const { slug } = await params;
-//   const dungeon = defaultState.dungeons.find(d => d.slug === slug);
-//   return {
-//     title: `Edit Dungeon: ${dungeon?.name}`,
-//   };
-// }
+import ResettableForm from '@components/forms/ResettableForm';
+import { sendUpdateDungeon } from '../components/DungeonServer';
 
 const DungeonDetailPage = ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = use(params);
   const router = useRouter();
-  const [dungeons, updateDungeons] = useLocalStorage<Dungeon[]>('dungeons', []);
-  const [dungeon] = useState<Dungeon | undefined>(() => {
-    const foundDungeon = dungeons.find(d => d.slug === slug);
-    if (!foundDungeon) {
-      router.push('/404');
-    }
-    return foundDungeon;
-  });
+  const { dungeonSelectors, dungeonDispatcher } = useDungeonsContext();
+  const dungeon = dungeonSelectors.get(slug);
+  if (!dungeon) {
+    router.push('/404');
+  }
 
-  const handleSubmit = (updatedDungeonData: Dungeon) => {
-    const index = dungeons.findIndex(d => d.slug === updatedDungeonData.slug);
-    if (index !== -1) {
-      const updatedDungeons = [...dungeons];
-      updatedDungeons[index] = updatedDungeonData;
-      updateDungeons(updatedDungeons);
-    }
-    console.log('Updated dungeon data:', updatedDungeonData);
+  const handleUpdate = async (_: Dungeon, formData: FormData) => {
+    const updateState = Object.fromEntries(formData.entries()) as unknown as Dungeon;
+    // update server data
+    await sendUpdateDungeon(updateState);
+    // update client data
+    dungeonDispatcher.change(updateState);
+
+    return updateState;
   };
 
   if (!dungeon) {
@@ -42,15 +32,23 @@ const DungeonDetailPage = ({ params }: { params: Promise<{ slug: string }> }) =>
   }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div>
-        <h1>
-          Edit Dungeon:&nbsp;
-          {dungeon.name}
-        </h1>
-        <DungeonForm dungeon={dungeon} onSubmit={handleSubmit} />
-      </div>
-    </Suspense>
+    <div>
+      <h1>
+        Edit Dungeon:&nbsp;
+        {dungeon.name}
+      </h1>
+      <ResettableForm
+        render={({ key, resetAction }) =>
+          (
+            <DungeonForm
+              key={key}
+              dungeon={dungeon}
+              submitAction={handleUpdate}
+              resetAction={resetAction}
+            />
+          )}
+      />
+    </div>
   );
 };
 

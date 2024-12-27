@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import SearchBar from '@components/SearchBar';
+import SearchBar from '@components/common/SearchBar';
 import { useDungeonsContext } from '../providers/DungeonsProvider';
 import { Dungeon } from '@/types';
 
@@ -11,13 +11,13 @@ import { Dungeon } from '@/types';
  * @returns The rendered component.
  */
 const DungeonList = () => {
-  const { dungeons } = useDungeonsContext();
+  const { dungeonSelectors } = useDungeonsContext();
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortedDungeons, setSortedDungeons] = useState(dungeons);
+  const [sortedDungeons, setSortedDungeons] = useState(dungeonSelectors.getAll());
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    const filteredDungeons = dungeons.filter(dungeon =>
+    const filteredDungeons = dungeonSelectors.getAll().filter(dungeon =>
       dungeon.name.toLowerCase().includes(term.toLowerCase()),
     );
     setSortedDungeons(filteredDungeons);
@@ -40,7 +40,7 @@ const DungeonList = () => {
     <>
       <SearchBar searchTerm={searchTerm} onSearch={handleSearch} onSort={handleSort} />
       <ul className="list-none ps-0 prose-li:ps-0">
-        {dungeons.map(dungeon => (
+        {sortedDungeons.map(dungeon => (
           <li key={dungeon.id}>
             <Link href={`/dungeons/${dungeon.slug}`}>
               {dungeon.name}

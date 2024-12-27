@@ -1,13 +1,7 @@
-import React from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 import { mergeClassNameProps } from '@/utils';
 
-interface Command {
-  id: string;
-  label?: string;
-  type?: 'button' | 'submit' | 'reset';
-  className?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement> | undefined) => void;
-}
+type Command = { label?: string } & ComponentPropsWithoutRef<'button'>;
 
 interface FormCommandsProps {
   className?: string;
@@ -17,11 +11,18 @@ interface FormCommandsProps {
 const FormCommands: React.FC<FormCommandsProps> = ({ className, commands }) => {
   return (
     <div className={mergeClassNameProps(className, 'flex gap-4')}>
-      {commands.map(command => (
-        <button key={command.id} type={command.type} className={generateButtonClasses(command)} onClick={getClickHandler(command)}>
-          {command.label}
-        </button>
-      ))}
+      {commands.map(({ id: key, type, className, label, onClick, ...rest }) => {
+        // generate the button classes
+        const generatedClasses = generateButtonClasses(type as string, className ?? '');
+        // get the click handler
+        const clickHandler = getClickHandler(type as string, onClick);
+        // return the button
+        return (
+          <button {...rest} key={key} type={type} className={generatedClasses} onClick={clickHandler}>
+            {label}
+          </button>
+        );
+      })}
     </div>
   );
 };
@@ -32,18 +33,18 @@ function resetCommand(e: React.MouseEvent<HTMLButtonElement>) {
   e.currentTarget.form?.reset();
 };
 
-function getClickHandler(command: Command) {
-  return command.onClick || (command.type === 'reset' ? resetCommand : undefined);
+function getClickHandler(type: string, onClick?: React.MouseEventHandler<HTMLButtonElement>): React.MouseEventHandler<HTMLButtonElement> | undefined {
+  return onClick || (type === 'reset' ? resetCommand : undefined);
 }
 
-function generateButtonClasses(command: Command): string | undefined {
-  const defaultClassNames = 'text-white font-bold py-2 px-4 rounded';
-  if (command.type === 'submit') {
-    return mergeClassNameProps(defaultClassNames, 'bg-sky-500 hover:bg-sky-700', command.className);
+function generateButtonClasses(type: string, className: string): string | undefined {
+  const defaultClassNames = 'text-white font-bold py-2 px-4 disabled:opacity-50 disabled:pointer-events-none rounded';
+  if (type === 'submit') {
+    return mergeClassNameProps(defaultClassNames, 'bg-sky-500 hover:bg-sky-700', className);
   }
-  else if (command.type === 'reset') {
-    return mergeClassNameProps(defaultClassNames, 'bg-slate-500', 'hover:bg-slate-700', command.className);
+  else if (type === 'reset') {
+    return mergeClassNameProps(defaultClassNames, 'bg-slate-500', 'hover:bg-slate-700', className);
   }
   // type is ('button' | undefined)
-  return mergeClassNameProps(defaultClassNames, 'bg-gray-500', 'hover:bg-gray-700', command.className);
+  return mergeClassNameProps(defaultClassNames, 'bg-gray-500', 'hover:bg-gray-700', className);
 }
