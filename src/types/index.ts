@@ -1,3 +1,5 @@
+import { ServerResponseStatus } from '@constants';
+
 export interface Dungeon {
   id: string;
   slug: string;
@@ -42,3 +44,16 @@ export interface DispatchAction<T> {
   type: Extract<'add' | 'set' | 'remove' | 'change', string>;
   payload: T | T[];
 }
+
+export interface Dispatcher<T> {
+  add: (payload: T) => void;
+  change: (payload: T) => void;
+  remove: (payload: T) => void;
+  set: (payload: T[]) => void;
+}
+
+export interface ServerResponse<T> {
+  data: T;
+  status: ServerResponseStatus;
+  message: string;
+};
