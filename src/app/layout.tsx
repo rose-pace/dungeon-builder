@@ -51,14 +51,14 @@ export default function RootLayout({
                   </Link>
                 </li>
                 <li>
-                  <a href="/stat-blocks" className="hover:underline">
+                  <Link href="/stat-blocks" className="hover:underline">
                     Stat Blocks
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/magic-items" className="hover:underline">
+                  <Link href="/magic-items" className="hover:underline">
                     Magic Items
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
