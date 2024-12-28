@@ -78,8 +78,8 @@ interface DefaultState {
 }
 const defaultState: DefaultState = {
   dungeons: [
-    { slug: 'goblin-cave', name: 'Goblin Cave', description: 'A cave with a goblin ambush.', id: '1', images: [], audio: '', campaignNotes: '', dmSecrets: '', zones: [] },
-    { slug: 'dragon-lair', name: 'Dragon Lair', description: 'A lair with a dragon.', id: '2', images: [], audio: '', campaignNotes: '', dmSecrets: '', zones: [] },
-    { slug: 'undead-crypt', name: 'Undead Crypt', description: 'A crypt with undead creatures.', id: '3', images: [], audio: '', campaignNotes: '', dmSecrets: '', zones: [] },
+    { slug: 'goblin-cave', name: 'Goblin Cave', description: 'A cave with a goblin ambush.', id: '1', images: '', audio: '', campaignNotes: '', dmSecrets: '', zones: [] },
+    { slug: 'dragon-lair', name: 'Dragon Lair', description: 'A lair with a dragon.', id: '2', images: '', audio: '', campaignNotes: '', dmSecrets: '', zones: [] },
+    { slug: 'undead-crypt', name: 'Undead Crypt', description: 'A crypt with undead creatures.', id: '3', images: '', audio: '', campaignNotes: '', dmSecrets: '', zones: [] },
   ],
 };
