@@ -7,4 +7,5 @@
     "editor.quickSuggestions": {
       "strings": "on"
     },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
 }
