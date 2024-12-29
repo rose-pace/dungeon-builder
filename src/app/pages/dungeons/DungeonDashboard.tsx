@@ -35,7 +35,13 @@ const DungeonDashboardPage = () => {
 
   return (
     <Grid>
-      <SearchBar searchTerm={searchTerm} onSearch={handleSearch} onSort={handleSort} />
+      <SearchBar
+        placeholder="Search Dungeons..."
+        searchTerm={searchTerm}
+        filterOptions={{ name: 'Name' }}
+        onSearch={handleSearch}
+        onSort={handleSort}
+      />
       <DungeonList dungeons={sortedDungeons} />
     </Grid>
   );
