@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import DungeonForm from './components/DungeonForm';
 import { useDungeonsContext, sendUpdateDungeon } from '@providers';
 import { Dungeon } from '@/types';
-import ResettableForm from '@components/forms/ResettableForm';
+import ResettableForm from '@/components/forms/ResettableForm';
 
 const DungeonEditPage = ({ dungeonSlug }: { dungeonSlug: string }) => {
   const router = useRouter();

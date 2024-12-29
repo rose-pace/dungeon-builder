@@ -2,7 +2,7 @@ import React from 'react';
 import { DungeonFeature } from '@/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import DisplayItem from '@components/common/DisplayItem';
+import DisplayItem from '@/components/common/DisplayItem';
 
 interface DisplayDungeonFeatureProps {
   feature: DungeonFeature;
