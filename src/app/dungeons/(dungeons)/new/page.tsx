@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import DungeonForm from '@/app/dungeons/components/DungeonForm';
-import { useDungeonsContext } from '../providers/DungeonsProvider';
+import DungeonForm from '@/app/dungeons/(dungeons)/_components/DungeonForm';
+import { useDungeonsContext } from '../../_providers/DungeonsProvider';
 import ResettableForm from '@components/forms/ResettableForm';
-import { sendCreateDungeon } from '../components/DungeonServer';
+import { sendCreateDungeon } from '../_components/DungeonServer';
 import { Dungeon } from '@/types';
 
 const NewDungeonPage = () => {

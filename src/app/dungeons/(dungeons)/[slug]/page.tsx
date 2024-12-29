@@ -2,11 +2,11 @@
 
 import React, { use } from 'react';
 import { useRouter } from 'next/navigation';
-import DungeonForm from '../components/DungeonForm';
-import { useDungeonsContext } from '../providers/DungeonsProvider';
+import DungeonForm from '../_components/DungeonForm';
+import { useDungeonsContext } from '../../_providers/DungeonsProvider';
 import { Dungeon } from '@/types';
 import ResettableForm from '@components/forms/ResettableForm';
-import { sendUpdateDungeon } from '../components/DungeonServer';
+import { sendUpdateDungeon } from '../_components/DungeonServer';
 
 const DungeonDetailPage = ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = use(params);

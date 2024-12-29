@@ -4,7 +4,7 @@ import React, { createContext, useContext } from 'react';
 import { useImmerReducer } from 'use-immer';
 import { Dungeon, DispatchAction, Dispatcher } from '@/types';
 import { createDispatcher, createStateSelectors, queryBuilder } from '@/utils';
-import { refreshDungeons } from '../components/DungeonServer';
+import { refreshDungeons } from '../(dungeons)/_components/DungeonServer';
 
 interface DungeonsContextValue {
   dungeonSelectors: ReturnType<typeof createStateSelectors<Dungeon>>;

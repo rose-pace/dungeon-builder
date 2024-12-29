@@ -1,21 +1,45 @@
-import React from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 
-interface ButtonProps {
+type ButtonProps = {
   onClick?: () => void;
   children?: React.ReactNode;
   label?: string;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-}
+  colorStyle?: 'primary' | 'secondary' | 'danger';
+} & ComponentPropsWithoutRef<'button'>;
 
-const Button: React.FC<ButtonProps> = ({ children, type = 'button', label = '', disabled = false, onClick = () => {} }) => {
+const Button: React.FC<ButtonProps> = ({
+  children,
+  type = 'button',
+  label = '',
+  colorStyle = 'secondary',
+  disabled = false,
+  onClick = () => {},
+  ...otherProps
+}) => {
+  let styleClasses = 'text-white font-bold py-2 px-4 rounded';
+  switch (colorStyle) {
+    case 'primary':
+      styleClasses += ' bg-sky-500 hover:bg-sky-700';
+      break;
+    case 'danger':
+      styleClasses += ' bg-red-500 hover:bg-red-700';
+      break;
+    case 'secondary':
+    default:
+      styleClasses += ' bg-gray-500 hover:bg-gray-700';
+      break;
+  }
+
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      className={styleClasses}
       title={label}
+      {...otherProps}
     >
       {children}
     </button>
