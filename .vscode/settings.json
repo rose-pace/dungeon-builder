@@ -8,4 +8,5 @@
       "strings": "on"
     },
     "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "git.enableCommitSigning": true,
 }
