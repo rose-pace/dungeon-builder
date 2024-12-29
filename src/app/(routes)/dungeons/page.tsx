@@ -1,11 +1,9 @@
-'use server';
-
 import React from 'react';
-import DungeonList from './_components/DungeonList';
+import DungeonDashboardPage from '@pages/dungeons/DungeonDashboard';
 
 const DungeonIndexPage = () => {
   return (
-    <DungeonList />
+    <DungeonDashboardPage />
   );
 };
 

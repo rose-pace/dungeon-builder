@@ -47,6 +47,10 @@ const eslintConfig = [
             group: ['@/types/**'],
             message: 'Do not import files inside types. Use @/types instead.',
           },
+          {
+            group: ['**/providers/**', '@providers/**'],
+            message: 'Do not directly import from providers. Use @providers instead.',
+          },
         ],
       }],
     },

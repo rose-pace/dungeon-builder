@@ -1,18 +1,17 @@
 'use client';
 
-import React, { use } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
-import DungeonForm from '../_components/DungeonForm';
-import { useDungeonsContext } from '../../_providers/DungeonsProvider';
+import DungeonForm from './components/DungeonForm';
+import { useDungeonsContext, sendUpdateDungeon } from '@providers';
 import { Dungeon } from '@/types';
 import ResettableForm from '@components/forms/ResettableForm';
-import { sendUpdateDungeon } from '../_components/DungeonServer';
 
-const DungeonDetailPage = ({ params }: { params: Promise<{ slug: string }> }) => {
-  const { slug } = use(params);
+const DungeonEditPage = ({ dungeonSlug }: { dungeonSlug: string }) => {
   const router = useRouter();
+  // TODO: use server data through new context
   const { dungeonSelectors, dungeonDispatcher } = useDungeonsContext();
-  const dungeon = dungeonSelectors.get(slug);
+  const dungeon = dungeonSelectors.get(dungeonSlug);
   if (!dungeon) {
     router.push('/404');
   }
@@ -52,4 +51,4 @@ const DungeonDetailPage = ({ params }: { params: Promise<{ slug: string }> }) =>
   );
 };
 
-export default DungeonDetailPage;
+export default DungeonEditPage;

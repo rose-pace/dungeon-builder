@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import SearchBar from '@components/common/SearchBar';
-import { useDungeonsContext } from '../../_providers/DungeonsProvider';
+import { useDungeonsContext } from '@providers';
 import { Dungeon } from '@/types';
 
 /**

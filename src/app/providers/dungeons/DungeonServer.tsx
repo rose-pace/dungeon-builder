@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { dungeonRepository } from '@server';
-import DungeonsProvider from '../../_providers/DungeonsProvider';
+import DungeonsProvider from './DungeonsProvider';
 import { Dungeon } from '@/types';
 
 /**

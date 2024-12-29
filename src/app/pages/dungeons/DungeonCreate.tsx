@@ -1,13 +1,12 @@
 'use client';
 
 import React from 'react';
-import DungeonForm from '@/app/dungeons/(dungeons)/_components/DungeonForm';
-import { useDungeonsContext } from '../../_providers/DungeonsProvider';
+import DungeonForm from './components/DungeonForm';
+import { useDungeonsContext, sendCreateDungeon } from '@providers';
 import ResettableForm from '@components/forms/ResettableForm';
-import { sendCreateDungeon } from '../_components/DungeonServer';
 import { Dungeon } from '@/types';
 
-const NewDungeonPage = () => {
+const DungeonCreatePage = () => {
   const { dungeonDispatcher } = useDungeonsContext();
 
   const handleAdd = async (_: Dungeon, formData: FormData) => {
@@ -37,4 +36,4 @@ const NewDungeonPage = () => {
   );
 };
 
-export default NewDungeonPage;
+export default DungeonCreatePage;

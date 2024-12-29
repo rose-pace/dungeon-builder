@@ -3,11 +3,12 @@
 import React, { useState } from 'react';
 import { DungeonFeature, DungeonFeatureType } from '@/types';
 import Repeater from '@components/common/Repeater';
-import DisplayDungeonFeature from '@/app/dungeons/features/_components/DisplayDungeonFeature';
+import DisplayDungeonFeature from './components/DisplayDungeonFeature';
 import Modal from '@components/common/Modal';
 import Button from '@components/common/Button';
 
-const DungeonFeatures = () => {
+// TODO: This should be limited to just the features that are part of the dungeon
+const DungeonFeaturesDashboard = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [activeFeature, setActiveFeature] = useState<DungeonFeature | null>(null);
   const [features, setFeatures] = useState<DungeonFeature[]>([
@@ -65,4 +66,4 @@ const DungeonFeatures = () => {
   );
 };
 
-export default DungeonFeatures;
+export default DungeonFeaturesDashboard;

@@ -21,7 +21,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/shared-components/*"],
-      "@dungeons/*": ["./src/app/dungeons/*"],
+      "@routes/*": ["./src/app/routes/*"],
+      "@pages/*": ["./src/app/pages/*"],
+      "@providers": ["./src/app/providers/index"],
       "@server": ["./src/infrastructure/index"],
     }
   },
