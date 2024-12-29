@@ -13,7 +13,7 @@ export const Breadcrumbs = ({ rootSegment }: { rootSegment: string }) => {
     }, [] as { segment: string; href: string }[]);
 
   return (
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" className="-mt-4 mb-4">
       <ul className="not-prose flex gap-6">
         <li key="home">
           <Link href="/">Home</Link>
