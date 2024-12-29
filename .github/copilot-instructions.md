@@ -27,19 +27,30 @@ Group styles in this order:
 7. Media queries
 8. Print styles
 
-## JavaScript Guidelines
+## Typescript Guidelines
 
-- Adhere to JSDoc standards, similar to the below example
+- Use 2 spaces for indents and tabs
+- Follow eslint rules
+- Adhere to TSDoc standards, similar to the below example
 /**
- * @description Clear description of purpose and behavior
- * @param {type} name - Description with valid/invalid values
- * @returns {type} Description of return value/state
+ * Clear description of purpose and behavior
+ * @param name - Description with valid/invalid values
+ * @returns Description of return value/state
  * @throws {ErrorType} Description of error conditions
  * @example
  * // Include multiple examples showing edge cases
  * functionName(validInput);
  */
-- Use 2 spaces for indents
+- For interfaces, document each property as in the below example
+/**
+ * Clear description of purpose and behavior
+ */
+interface ExampleInterface {
+  /** Clear description of property */
+  foo: string,
+  /** Clear description of property */
+  bar: string,
+}
 
 ## Code Quality Rules
 - Use consistent naming:
