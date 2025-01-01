@@ -1,5 +1,10 @@
 # Code Guidelines for Static Sites
 
+## Commit Message Standards
+- Use short and concise statements that start with an active verb
+- Describe each change in a single statement ending in a semicolon (;)
+- When necessary use actual names of edited files, functions, or modules
+
 ## Module Imports
 - Make use of the paths in tsconfig.json
 - Sort imports for readability
@@ -8,27 +13,7 @@
 - Local components shoulc be grouped third
 - Local libraries and utitlities should be grouped last
 
-## HTML Standards
-- Use HTML5 doctype and specify language attribute
-- Include charset (UTF-8) and responsive viewport meta tags
-- Place scripts at bottom of body with appropriate defer/async attributes
-- Use semantic elements with proper ARIA attributes where needed
-- Ensure proper heading hierarchy (h1-h6)
-- Include meta description for SEO
-
-## CSS Organization
-Group styles in this order:
-1. Reset/Normalize
-2. CSS Custom Properties (variables)
-3. Base styles
-4. Layout/Grid 
-5. Components
-6. Utilities
-7. Media queries
-8. Print styles
-
 ## Typescript Guidelines
-
 - Use 2 spaces for indents and tabs
 - Follow eslint rules
 - Adhere to TSDoc standards, similar to the below example
@@ -62,5 +47,4 @@ interface ExampleInterface {
 - Clean up event listeners and subscriptions
 - Maximum line length: 80 characters
 - Document breaking changes
-- Sort imports by grouping external and internal dependencies and then alphabetically
 - If declaring more than 3 variables in a row sort alphabetically
