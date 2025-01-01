@@ -2,9 +2,9 @@
 
 import React, { useActionState, useState } from 'react';
 import { Dungeon } from '@/types';
-import FormItem from '@/components/forms/FormItem';
-import Grid from '@/components/layout/Grid';
-import FormCommands from '@/components/forms/FormCommands';
+import FormItem from '@/app/components/forms/FormItem';
+import Grid from '@/app/components/layout/Grid';
+import FormCommands from '@/app/components/forms/FormCommands';
 
 interface DungeonFormProps {
   dungeon?: Dungeon;

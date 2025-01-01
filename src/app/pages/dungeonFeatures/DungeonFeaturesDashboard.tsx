@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { DungeonFeature, DungeonFeatureType } from '@/types';
-import Repeater from '@/components/common/Repeater';
+import Repeater from '@/app/components/common/Repeater';
 import DisplayDungeonFeature from './components/DisplayDungeonFeature';
-import Modal from '@/components/common/Modal';
-import Button from '@/components/common/Button';
+import Modal from '@/app/components/common/Modal';
+import Button from '@/app/components/common/Button';
 
 // TODO: This should be limited to just the features that are part of the dungeon
 const DungeonFeaturesDashboard = () => {

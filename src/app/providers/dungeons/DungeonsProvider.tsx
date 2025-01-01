@@ -50,6 +50,13 @@ const DungeonsProvider = ({ children, dungeons }: DungeonProviderProps) => {
 export default DungeonsProvider;
 
 /**
+ * Hook to use the dungeons context.
+ *
+ * @returns The dungeons context value.
+ */
+export const useDungeonsContext = () => useContext(DungeonsContext);
+
+/**
  * Create a function that syncs server changes to the reducer.
  * @param dispatch dispatch function to update the dungeons in the reducer
  * @returns Promise object that resolves to a function that updates the dungeons in the reducer
@@ -74,15 +81,6 @@ const buildDungeonActionSync = (dispatch: React.Dispatch<DispatchAction<Dungeon>
     throw new Error('Dungeon not found');
   };
 };
-
-// Exports
-
-/**
- * Hook to use the dungeons context.
- *
- * @returns The dungeons context value.
- */
-export const useDungeonsContext = () => useContext(DungeonsContext);
 
 /**
  * Reducer for the dungeons context.
