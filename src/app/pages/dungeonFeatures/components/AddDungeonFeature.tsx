@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DungeonFeature, DungeonFeatureType } from '@/types';
-import FormItem from '@/components/forms/FormItem';
+import FormItem from '@/app/components/forms/FormItem';
 
 interface AddDungeonFeatureProps {
   onAdd: (feature: DungeonFeature) => void;

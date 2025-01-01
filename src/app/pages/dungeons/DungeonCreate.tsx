@@ -3,7 +3,7 @@
 import React from 'react';
 import DungeonForm from './components/DungeonForm';
 import { useDungeonsContext, sendCreateDungeon } from '@providers';
-import ResettableForm from '@/components/forms/ResettableForm';
+import ResettableForm from '@/app/components/forms/ResettableForm';
 import { Dungeon } from '@/types';
 
 const DungeonCreatePage = () => {
