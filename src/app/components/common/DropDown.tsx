@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { mergeClassNameProps } from '@/utils';
 
 /**
  * DropDown component props interface.
@@ -12,6 +13,8 @@ interface DropDownProps {
   onChange: (key: string) => void;
   /** The selected option */
   selected?: { key: string; value: string };
+  /** Additional class names for the component */
+  className?: string;
 }
 
 /**
@@ -30,7 +33,7 @@ interface DropDownProps {
  *   selectedKey="key1"
  * />
  */
-const DropDown: React.FC<DropDownProps> = ({ options, placeholder, selected, onChange }) => {
+const DropDown: React.FC<DropDownProps> = ({ className, options, placeholder, selected, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const getTextValue = () => {
     if (selected) {
@@ -57,7 +60,7 @@ const DropDown: React.FC<DropDownProps> = ({ options, placeholder, selected, onC
   return (
     <div
       role="menu"
-      className="relative inline-block"
+      className={mergeClassNameProps(className, 'relative inline-block')}
     >
       <div className="absolute top-0 left-0 right-0">
         <input

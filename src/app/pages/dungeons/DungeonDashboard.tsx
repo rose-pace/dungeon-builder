@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import SearchBar from '@components/common/SearchBar';
 import DungeonList from './components/DungeonList';
 import { useDungeonsContext } from '@providers';
 import { Dungeon } from '@/types';
-import Grid from '@/app/components/layout/Grid';
 
 const DungeonDashboardPage = () => {
   const { dungeonSelectors } = useDungeonsContext();
@@ -47,17 +49,25 @@ const DungeonDashboardPage = () => {
   };
 
   return (
-    <Grid columns={2}>
-      <SearchBar
-        className="col-span-2"
-        placeholder="Search Dungeons..."
-        searchTerm={searchTerm}
-        filterOptions={[{ key: 'name', value: 'Name' }, { key: 'desc:name', value: 'Name Desc' }]}
-        onSearch={handleSearch}
-        onSort={handleSort}
-      />
+    <>
+      <h1 className="mb-2">Dungeons</h1>
+      <div className="border-y border-color py-4 text-sm">
+        <SearchBar
+          placeholder="Search Dungeons..."
+          searchTerm={searchTerm}
+          filterOptions={[{ key: 'name', value: 'Name' }, { key: 'desc:name', value: 'Name Desc' }]}
+          onSearch={handleSearch}
+          onSort={handleSort}
+          className="mb-4"
+        />
+        <Link href="/dungeons/create" className="btn btn-primary no-underline">
+          <FontAwesomeIcon icon={faSquarePlus} />
+          &nbsp;
+          Create Dungeon
+        </Link>
+      </div>
       <DungeonList dungeons={sortedDungeons} />
-    </Grid>
+    </>
   );
 };
 

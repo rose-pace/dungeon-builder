@@ -2,7 +2,6 @@
 
 // components/SearchBar.tsx
 import React, { useState } from 'react';
-import DropDown from './DropDown';
 import { mergeClassNameProps } from '@/utils';
 
 type SearchBarProps = {
@@ -25,33 +24,34 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, filterOptions, onSear
     onSort(key);
   };
 
-  const sortOptions = filterOptions.reduce((acc, { key, value }) => {
-    acc[key] = value;
-    return acc;
-  }, {} as Record<string, string>);
-
-  const getSelected = () => {
-    if (sortKey && filterOptions.some(option => option.key === sortKey)) {
-      return filterOptions.find(option => option.key === sortKey);
-    }
-
-    return undefined;
-  };
-
   return (
-    <div {...otherProps} className={mergeClassNameProps(className, 'grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4')}>
+    <div
+      {...otherProps}
+      className={mergeClassNameProps(className, 'grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4')}
+    >
       <input
+        title="Search Dungeons"
+        aria-label="Search Dungeons"
         type="text"
         value={searchTerm}
         onChange={handleSearchChange}
         placeholder={placeholder}
+        className="text-sm py-1"
       />
-      <DropDown
-        options={sortOptions}
-        placeholder="Sort by..."
-        selected={getSelected()}
-        onChange={handleSort}
-      />
+      <select
+        title="Sort Dungeons"
+        aria-label="Sort Dungeons"
+        value={sortKey}
+        onChange={e => handleSort(e.target.value)}
+        className="text-sm py-1"
+      >
+        <option value="" className="text-gray-500">
+          Sort by...
+        </option>
+        {filterOptions.map(({ key, value }) => (
+          <option key={key} value={key}>{value}</option>
+        ))}
+      </select>
     </div>
   );
 };
