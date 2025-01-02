@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import SearchBar from '@/components/common/SearchBar';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
+import SearchBar from '@components/common/SearchBar';
 import DungeonList from './components/DungeonList';
 import { useDungeonsContext } from '@providers';
 import { Dungeon } from '@/types';
-import Grid from '@/components/layout/Grid';
 
 const DungeonDashboardPage = () => {
   const { dungeonSelectors } = useDungeonsContext();
@@ -21,7 +23,17 @@ const DungeonDashboardPage = () => {
   };
 
   const handleSort = (sortKey: string) => {
-    const key = sortKey as keyof Dungeon;
+    let key = sortKey as keyof Dungeon;
+    let desc = false;
+    if (key.startsWith('desc:')) {
+      key = key.replace('desc:', '') as keyof Dungeon;
+      desc = true;
+    }
+    if (!(key in sortedDungeons?.[0])) {
+      // reset sort
+      setSortedDungeons(dungeonSelectors.getAll());
+      return;
+    }
     const sorted = [...sortedDungeons].sort((a, b) => {
       const aValue = a[key];
       const bValue = b[key];
@@ -30,14 +42,32 @@ const DungeonDashboardPage = () => {
       }
       return 0;
     });
+    if (desc) {
+      sorted.reverse();
+    }
     setSortedDungeons(sorted);
   };
 
   return (
-    <Grid>
-      <SearchBar searchTerm={searchTerm} onSearch={handleSearch} onSort={handleSort} />
+    <>
+      <h1 className="mb-2">Dungeons</h1>
+      <div className="border-y border-color py-4 text-sm">
+        <SearchBar
+          placeholder="Search Dungeons..."
+          searchTerm={searchTerm}
+          filterOptions={[{ key: 'name', value: 'Name' }, { key: 'desc:name', value: 'Name Desc' }]}
+          onSearch={handleSearch}
+          onSort={handleSort}
+          className="mb-4"
+        />
+        <Link href="/dungeons/create" className="btn btn-primary no-underline">
+          <FontAwesomeIcon icon={faSquarePlus} />
+          &nbsp;
+          Create Dungeon
+        </Link>
+      </div>
       <DungeonList dungeons={sortedDungeons} />
-    </Grid>
+    </>
   );
 };
 

@@ -9,6 +9,10 @@
     font-family: var(--font-geist-sans);
   }
 
+  .border-color {
+    @apply border-zinc-800;
+  }
+
   .monospace {
     font-family: var(--font-geist-mono);
   }
@@ -31,13 +35,18 @@
   select,
   optgroup,
   select,
-  textarea {
+  textarea,
+  input.form-select {
     @apply text-zinc-900 bg-white border border-zinc-900;
   }
 
   @media (prefers-color-scheme: dark) {
     body {
       @apply bg-zinc-800;
+    }
+
+    .border-color {
+      @apply border-zinc-200;
     }
 
     [type="text"],
@@ -58,7 +67,8 @@
     select,
     optgroup,
     select,
-    textarea {
+    textarea,
+    input.form-select {
       @apply text-inherit bg-zinc-600 border border-slate-400;
     }
   }

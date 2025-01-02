@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import DungeonForm from './components/DungeonForm';
 import { useDungeonsContext, sendUpdateDungeon } from '@providers';
 import { Dungeon } from '@/types';
-import ResettableForm from '@/components/forms/ResettableForm';
 
 const DungeonEditPage = ({ dungeonSlug }: { dungeonSlug: string }) => {
   const router = useRouter();
@@ -36,17 +35,7 @@ const DungeonEditPage = ({ dungeonSlug }: { dungeonSlug: string }) => {
         Edit Dungeon:&nbsp;
         {dungeon.name}
       </h1>
-      <ResettableForm
-        render={({ key, resetAction }) =>
-          (
-            <DungeonForm
-              key={key}
-              dungeon={dungeon}
-              submitAction={handleUpdate}
-              resetAction={resetAction}
-            />
-          )}
-      />
+      <DungeonForm dungeon={dungeon} submitAction={handleUpdate} />
     </div>
   );
 };

@@ -3,7 +3,6 @@
 import React from 'react';
 import DungeonForm from './components/DungeonForm';
 import { useDungeonsContext, sendCreateDungeon } from '@providers';
-import ResettableForm from '@/components/forms/ResettableForm';
 import { Dungeon } from '@/types';
 
 const DungeonCreatePage = () => {
@@ -22,16 +21,7 @@ const DungeonCreatePage = () => {
   return (
     <div>
       <h1>Create New Dungeon</h1>
-      <ResettableForm
-        render={({ key, resetAction }) =>
-          (
-            <DungeonForm
-              key={key}
-              submitAction={handleAdd}
-              resetAction={resetAction}
-            />
-          )}
-      />
+      <DungeonForm submitAction={handleAdd} />
     </div>
   );
 };

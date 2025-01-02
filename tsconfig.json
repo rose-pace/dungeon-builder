@@ -20,9 +20,10 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@routes/*": ["./src/app/routes/*"],
+      "@components/*": ["./src/app/components/*"],
       "@pages/*": ["./src/app/pages/*"],
       "@providers": ["./src/app/providers/index"],
+      "@routes/*": ["./src/app/routes/*"],
       "@server": ["./src/server/index"],
     }
   },
