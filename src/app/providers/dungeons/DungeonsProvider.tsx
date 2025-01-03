@@ -27,7 +27,7 @@ interface DungeonProviderProps {
 const DungeonsProvider = ({ children, dungeons }: DungeonProviderProps) => {
   // Initialize the dungeons state
   const initalState = dungeons.reduce((acc, dungeon) => {
-    acc[dungeon.slug] = dungeon;
+    acc[dungeon.id] = dungeon;
     return acc;
   }, {} as Record<string, Dungeon>);
 
@@ -71,7 +71,7 @@ const buildDungeonActionSync = (dispatch: React.Dispatch<DispatchAction<Dungeon>
 
     // refresh the dungeons
     const savedDungeon = action.payload as Dungeon;
-    const dungeons = await refreshDungeons(queryBuilder<Dungeon>().any([{ slug: savedDungeon.slug }]).query);
+    const dungeons = await refreshDungeons(queryBuilder<Dungeon>().any([{ id: savedDungeon.id }]).query);
 
     if (dungeons.length > 0) {
       dispatch({ type: 'change', payload: dungeons });
@@ -95,19 +95,19 @@ function dungeonReducer(draft: Record<string, Dungeon>, action: DispatchAction<D
     // add or change the dungeons in the state
     case 'add':
     case 'change': {
-      payload.forEach(dungeon => draft[dungeon.slug] = dungeon);
+      payload.forEach(dungeon => draft[dungeon.id] = dungeon);
       return;
     }
     case 'set': {
       // replace the entire state with the new payload
       return payload.reduce((acc, dungeon) => {
-        acc[dungeon.slug] = dungeon;
+        acc[dungeon.id] = dungeon;
         return acc;
       }, {} as Record<string, Dungeon>);
     }
     case 'remove': {
       // remove the dungeons from the state
-      payload.forEach(dungeon => delete draft[dungeon.slug]);
+      payload.forEach(dungeon => delete draft[dungeon.id]);
       return;
     }
     default: {
