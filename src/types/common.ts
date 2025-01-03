@@ -10,6 +10,12 @@ export interface Dispatcher<T> {
   set: (payload: T[]) => void;
 }
 
+export interface IEntity {
+  id: string;
+  createdAt: number;
+  updatedAt?: number;
+}
+
 export interface ValidationDisplay {
   lead: string | null;
   show: boolean;

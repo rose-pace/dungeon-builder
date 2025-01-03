@@ -1,3 +1,4 @@
+import { IEntity } from './common';
 import { DUNGEON_FEATURE_TYPES } from './constants';
 
 export interface Connection {
@@ -7,8 +8,7 @@ export interface Connection {
   targetFeatureId: string;
 }
 
-export interface Dungeon {
-  id: string;
+export interface Dungeon extends IEntity {
   slug: string;
   name: string;
   description: string;
@@ -19,8 +19,8 @@ export interface Dungeon {
   zones: Zone[];
 }
 
-export interface DungeonFeature {
-  id: string;
+export interface DungeonFeature extends IEntity {
+  slug: string;
   type: DUNGEON_FEATURE_TYPES;
   name: string;
   description: string;
@@ -32,8 +32,7 @@ export interface DungeonFeature {
   connections: Connection[];
 }
 
-export interface Zone {
-  id: string;
+export interface Zone extends IEntity {
   name: string;
   description: string;
   primaryRoom: DungeonFeature;

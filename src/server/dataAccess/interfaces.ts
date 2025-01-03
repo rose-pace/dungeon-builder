@@ -1,4 +1,4 @@
-import { Dungeon } from '@/types';
+import { Dungeon, DungeonFeature } from '@/types';
 
 export interface IQueryParts<T> {
   entity: T;
@@ -15,10 +15,11 @@ export interface IDataSet<T> {
 
 export interface IDataContext {
   dungeons: IDataSet<Dungeon>;
+  dungeonFeatures: IDataSet<DungeonFeature>;
 }
 
 export interface IRepository<T> {
-  create(entity: T): Promise<T>;
+  create(entity: T): Promise<void>;
   filter(criteria: Partial<T>[], skip?: number, take?: number): Promise<T[]>;
   find(criteria: Partial<T>[]): Promise<T | null>;
   update(entity: T, criteria: Partial<T>[]): Promise<void>;
