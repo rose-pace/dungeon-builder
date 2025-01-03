@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DungeonFeature, DungeonFeatureType } from '@/types';
+import { DungeonFeature, DUNGEON_FEATURE_TYPES } from '@/types';
 
 interface EditDungeonFeatureProps {
   feature: DungeonFeature;
@@ -53,16 +53,16 @@ const EditDungeonFeature: React.FC<EditDungeonFeatureProps> = ({ feature, onSave
         onChange={handleChange}
         className="w-full p-2 mb-2 border rounded"
       >
-        <option value={DungeonFeatureType.DOOR}>Door</option>
-        <option value={DungeonFeatureType.HAZARD}>Hazard</option>
-        <option value={DungeonFeatureType.HIDDEN}>Hidden</option>
-        <option value={DungeonFeatureType.MONSTER_ENCOUNTER}>Monster Encounter</option>
-        <option value={DungeonFeatureType.NPC_ENCOUNTER}>NPC Encounter</option>
-        <option value={DungeonFeatureType.PASSAGE}>Passage</option>
-        <option value={DungeonFeatureType.PUZZLE}>Puzzle</option>
-        <option value={DungeonFeatureType.ROOM}>Room</option>
-        <option value={DungeonFeatureType.TRAP}>Trap</option>
-        <option value={DungeonFeatureType.TREASURE}>Treasure</option>
+        <option value={DUNGEON_FEATURE_TYPES.DOOR}>Door</option>
+        <option value={DUNGEON_FEATURE_TYPES.HAZARD}>Hazard</option>
+        <option value={DUNGEON_FEATURE_TYPES.HIDDEN}>Hidden</option>
+        <option value={DUNGEON_FEATURE_TYPES.MONSTER_ENCOUNTER}>Monster Encounter</option>
+        <option value={DUNGEON_FEATURE_TYPES.NPC_ENCOUNTER}>NPC Encounter</option>
+        <option value={DUNGEON_FEATURE_TYPES.PASSAGE}>Passage</option>
+        <option value={DUNGEON_FEATURE_TYPES.PUZZLE}>Puzzle</option>
+        <option value={DUNGEON_FEATURE_TYPES.ROOM}>Room</option>
+        <option value={DUNGEON_FEATURE_TYPES.TRAP}>Trap</option>
+        <option value={DUNGEON_FEATURE_TYPES.TREASURE}>Treasure</option>
       </select>
       <label className="block mb-2">
         <input

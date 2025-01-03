@@ -2,7 +2,7 @@
 
 import { createPortal } from 'react-dom';
 import { mergeClassNameProps } from '@/utils/ui/componentUtils';
-import { CommonStyles } from '@/types';
+import { COMMON_STYLES } from '@/types';
 
 interface ModalProps {
   toggleModal: () => void;
@@ -36,7 +36,7 @@ const Modal = ({ toggleModal, children, modalHeader, modalFooter }: ModalProps) 
       aria-labelledby="modalTitle"
       aria-describedby="modalBody"
     >
-      <div className={mergeClassNameProps(CommonStyles.PANE_BG_COLOR, 'p-4 rounded-lg space-y-4')}>
+      <div className={mergeClassNameProps(COMMON_STYLES.PANE_BG_COLOR, 'p-4 rounded-lg space-y-4')}>
         <div id="modalTitle" className="flex">
           {getModalHeader(modalHeader)}
           <button className="ml-auto" title="Close Modal" onClick={toggleModal}>

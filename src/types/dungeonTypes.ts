@@ -1,10 +1,10 @@
-import { DungeonFeatureType } from './constants';
+import { DUNGEON_FEATURE_TYPES } from './constants';
 
 export interface Connection {
   id: string;
   type: string;
   isHidden: boolean;
-  targetElementId: string;
+  targetFeatureId: string;
 }
 
 export interface Dungeon {
@@ -21,7 +21,7 @@ export interface Dungeon {
 
 export interface DungeonFeature {
   id: string;
-  type: DungeonFeatureType;
+  type: DUNGEON_FEATURE_TYPES;
   name: string;
   description: string;
   images: string;

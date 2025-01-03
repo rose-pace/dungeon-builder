@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DungeonFeature, DungeonFeatureType } from '@/types';
+import { DungeonFeature, DUNGEON_FEATURE_TYPES } from '@/types';
 import Repeater from '@/app/components/common/Repeater';
 import DisplayDungeonFeature from './components/DisplayDungeonFeature';
 import Modal from '@/app/components/common/Modal';
@@ -12,9 +12,9 @@ const DungeonFeaturesDashboard = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [activeFeature, setActiveFeature] = useState<DungeonFeature | null>(null);
   const [features, setFeatures] = useState<DungeonFeature[]>([
-    { id: '1', name: 'Enchanted Sword', description: 'A sword with magical properties.', type: DungeonFeatureType.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [] },
-    { id: '2', name: 'Mystic Wand', description: 'A wand that can cast powerful spells.', type: DungeonFeatureType.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [] },
-    { id: '3', name: 'Potion of Healing', description: 'A potion that heals wounds.', type: DungeonFeatureType.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [] },
+    { id: '1', name: 'Enchanted Sword', description: 'A sword with magical properties.', type: DUNGEON_FEATURE_TYPES.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [] },
+    { id: '2', name: 'Mystic Wand', description: 'A wand that can cast powerful spells.', type: DUNGEON_FEATURE_TYPES.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [] },
+    { id: '3', name: 'Potion of Healing', description: 'A potion that heals wounds.', type: DUNGEON_FEATURE_TYPES.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [] },
   ]);
 
   const deleteAction = (feature?: DungeonFeature) => {
