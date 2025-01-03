@@ -1,10 +1,10 @@
 import React from 'react';
 import DungeonCreatePage from '@pages/dungeons/DungeonCreate';
 
-const NewDungeonPage = () => {
+const CreateDungeonPage = () => {
   return (
     <DungeonCreatePage />
   );
 };
 
-export default NewDungeonPage;
+export default CreateDungeonPage;

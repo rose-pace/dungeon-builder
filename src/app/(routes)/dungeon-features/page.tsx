@@ -2,10 +2,10 @@ import React from 'react';
 import DungeonFeaturesDashboard from '@/app/pages/dungeonFeatures/DungeonFeaturesDashboard';
 
 // TODO: Add a context for associated dungeon features
-const DungeonFeatures = () => {
+const DungeonFeaturesIndexPage = () => {
   return (
     <DungeonFeaturesDashboard />
   );
 };
 
-export default DungeonFeatures;
+export default DungeonFeaturesIndexPage;
