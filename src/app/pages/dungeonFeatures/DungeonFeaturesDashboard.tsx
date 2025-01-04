@@ -1,21 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DungeonFeature, DUNGEON_FEATURE_TYPES } from '@/types';
+import { DungeonFeature } from '@/types';
 import Repeater from '@/app/components/common/Repeater';
 import DisplayDungeonFeature from './components/DisplayDungeonFeature';
 import Modal from '@/app/components/common/Modal';
 import Button from '@/app/components/common/Button';
+import { useDungeonFeaturesContext } from '@providers';
 
 // TODO: This should be limited to just the features that are part of the dungeon
 const DungeonFeaturesDashboard = () => {
+  const { dungeonFeatureSelectors } = useDungeonFeaturesContext();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [activeFeature, setActiveFeature] = useState<DungeonFeature | null>(null);
-  const [features, setFeatures] = useState<DungeonFeature[]>([
-    { id: '1', name: 'Enchanted Sword', description: 'A sword with magical properties.', type: DUNGEON_FEATURE_TYPES.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [] },
-    { id: '2', name: 'Mystic Wand', description: 'A wand that can cast powerful spells.', type: DUNGEON_FEATURE_TYPES.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [] },
-    { id: '3', name: 'Potion of Healing', description: 'A potion that heals wounds.', type: DUNGEON_FEATURE_TYPES.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [] },
-  ]);
+  const [features, setFeatures] = useState<DungeonFeature[]>(dungeonFeatureSelectors.getAll());
 
   const deleteAction = (feature?: DungeonFeature) => {
     if (feature) {
