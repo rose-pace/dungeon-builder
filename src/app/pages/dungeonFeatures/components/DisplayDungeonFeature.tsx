@@ -6,19 +6,26 @@ import DisplayItem from '@/app/components/common/DisplayItem';
 
 interface DisplayDungeonFeatureProps {
   feature: DungeonFeature;
-  editAction: (feature: DungeonFeature) => void;
-  deleteAction: (feature: DungeonFeature) => void;
+  editAction?: (feature: DungeonFeature) => void;
+  deleteAction?: (feature: DungeonFeature) => void;
 }
 
 const DisplayDungeonFeature: React.FC<DisplayDungeonFeatureProps> = ({ feature, editAction, deleteAction }) => {
+  const handleClick = (e: React.MouseEvent, action?: (feature: DungeonFeature) => void) => {
+    if (!action) return;
+    e.preventDefault();
+    action(feature);
+    return false;
+  };
+
   return (
     <>
       <div className="p-4 border rounded-lg flex flex-col md:flex-row gap-2 md:gap-4">
         <div className="flex-none flex-nowrap flex gap-4 not-prose">
-          <a href="#" title="edit" aria-label="edit" onClick={() => editAction(feature)} className="text-sky-500 transition hover:scale-110 h-min">
+          <a href={`/dungeon-features/${feature.slug}`} title="edit" onClick={e => handleClick(e, editAction)} aria-label="edit" className="text-sky-500 transition hover:scale-110 h-min">
             <FontAwesomeIcon icon={faEdit} />
           </a>
-          <a href="#" title="delete" aria-label="delete" onClick={() => deleteAction(feature)} className="text-red-500 transition hover:scale-110 h-min">
+          <a href="#" title="delete" aria-label="delete" onClick={e => handleClick(e, deleteAction)} className="text-red-500 transition hover:scale-110 h-min">
             <FontAwesomeIcon icon={faTrashCan} />
           </a>
         </div>

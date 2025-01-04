@@ -25,6 +25,7 @@ const DungeonFeaturesDashboard = () => {
   const callDeleteAction = (feature: DungeonFeature) => {
     setActiveFeature(feature);
     setIsDeleteModalOpen(true);
+    return false;
   };
 
   const modalFooter = (
@@ -46,7 +47,6 @@ const DungeonFeaturesDashboard = () => {
           <DisplayDungeonFeature
             key={item.id}
             feature={item}
-            editAction={() => {}}
             deleteAction={callDeleteAction}
           />
         )}
