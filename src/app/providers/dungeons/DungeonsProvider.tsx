@@ -27,7 +27,7 @@ interface DungeonProviderProps {
 const DungeonsProvider = ({ children, dungeons }: DungeonProviderProps) => {
   // Initialize the dungeons state
   const initalState = dungeons.reduce((acc, dungeon) => {
-    acc[dungeon.id] = dungeon;
+    acc[dungeon.slug] = dungeon;
     return acc;
   }, {} as Record<string, Dungeon>);
 
@@ -63,8 +63,8 @@ export const useDungeonsContext = () => useContext(DungeonsContext);
  */
 const buildDungeonActionSync = (dispatch: React.Dispatch<DispatchAction<Dungeon>>) => {
   return async (action: DispatchAction<Dungeon>): Promise<void> => {
-    // if delete then dispatch the original action, else refresh data from the server
-    if (action.type === 'remove') {
+    // if delete or set then dispatch the original action, else refresh data from the server
+    if (action.type === 'remove' || action.type === 'set') {
       dispatch(action);
       return;
     }
@@ -74,7 +74,7 @@ const buildDungeonActionSync = (dispatch: React.Dispatch<DispatchAction<Dungeon>
     const dungeons = await refreshDungeons(queryBuilder<Dungeon>().any([{ id: savedDungeon.id }]).query);
 
     if (dungeons.length > 0) {
-      dispatch({ type: 'change', payload: dungeons });
+      dispatch({ ...action, payload: dungeons });
       return;
     }
 
@@ -91,11 +91,19 @@ const buildDungeonActionSync = (dispatch: React.Dispatch<DispatchAction<Dungeon>
  */
 function dungeonReducer(draft: Record<string, Dungeon>, action: DispatchAction<Dungeon>): void | Record<string, Dungeon> {
   const payload = Array.isArray(action.payload) ? action.payload : [action.payload];
+
+  // handle possible changes to the initial slug
+  const initialSlug = action.context?.initialSlug;
+  if (initialSlug && Object.keys(draft).includes(initialSlug as string)) {
+    delete draft[initialSlug as string];
+  }
+
+  // update state based on the action type
   switch (action.type) {
     // add or change the dungeons in the state
     case 'add':
     case 'change': {
-      payload.forEach(dungeon => draft[dungeon.id] = dungeon);
+      payload.forEach(dungeon => draft[dungeon.slug] = dungeon);
       return;
     }
     case 'set': {
@@ -107,7 +115,7 @@ function dungeonReducer(draft: Record<string, Dungeon>, action: DispatchAction<D
     }
     case 'remove': {
       // remove the dungeons from the state
-      payload.forEach(dungeon => delete draft[dungeon.id]);
+      payload.forEach(dungeon => delete draft[dungeon.slug]);
       return;
     }
     default: {

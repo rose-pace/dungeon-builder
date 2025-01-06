@@ -28,7 +28,7 @@ interface DungeonFeaturesProviderProps {
 const DungeonFeaturesProvider = ({ children, dungeonFeatures }: DungeonFeaturesProviderProps) => {
   // Initialize the dungeon features state
   const initialState = dungeonFeatures.reduce((acc, feature) => {
-    acc[feature.id] = feature;
+    acc[feature.slug] = feature;
     return acc;
   }, {} as Record<string, DungeonFeature>);
 
@@ -92,23 +92,31 @@ const buildDungeonFeatureActionSync = (dispatch: React.Dispatch<DispatchAction<D
  */
 function dungeonFeatureReducer(draft: Record<string, DungeonFeature>, action: DispatchAction<DungeonFeature>): void | Record<string, DungeonFeature> {
   const payload = Array.isArray(action.payload) ? action.payload : [action.payload];
+
+  // handle possible changes to the initial slug
+  const initialSlug = action.context?.initialSlug;
+  if (initialSlug && Object.keys(draft).includes(initialSlug as string)) {
+    delete draft[initialSlug as string];
+  }
+
+  // update state based on the action type
   switch (action.type) {
     // add or change the dungeon features in the state
     case 'add':
     case 'change': {
-      payload.forEach(feature => draft[feature.id] = feature);
+      payload.forEach(feature => draft[feature.slug] = feature);
       return;
     }
     case 'set': {
       // replace the entire state with the new payload
       return payload.reduce((acc, feature) => {
-        acc[feature.id] = feature;
+        acc[feature.slug] = feature;
         return acc;
       }, {} as Record<string, DungeonFeature>);
     }
     case 'remove': {
       // remove the dungeon features from the state
-      payload.forEach(feature => delete draft[feature.id]);
+      payload.forEach(feature => delete draft[feature.slug]);
       return;
     }
     default: {
