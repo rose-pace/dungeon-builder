@@ -1,7 +1,6 @@
 import React from 'react';
-import DungeonFeaturesDashboard from '@/app/pages/dungeonFeatures/DungeonFeaturesDashboard';
+import DungeonFeaturesDashboard from '@/app/pages/dungeonFeatures/DungeonFeatureDashboard';
 
-// TODO: Add a context for associated dungeon features
 const DungeonFeaturesIndexPage = () => {
   return (
     <DungeonFeaturesDashboard />
