@@ -1,2 +1,2 @@
 export * from './dungeons';
-export * from './dungeonFeatures';
+export * from './dungeonAssets';

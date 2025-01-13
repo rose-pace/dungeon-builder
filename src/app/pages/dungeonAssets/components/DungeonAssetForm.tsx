@@ -1,18 +1,18 @@
 import React from 'react';
-import { DungeonFeature, DUNGEON_FEATURE_TYPES } from '@/types';
+import { DungeonAsset } from '@/types';
 import FormItem from '@/app/components/forms/FormItem';
 import Form from '@/app/components/forms/Form';
 import Grid from '@/app/components/layout/Grid';
 
-interface DungeonFeatureFormProps {
-  dungeonFeature?: DungeonFeature;
-  submitAction: (initialState: DungeonFeature, updateState: FormData) => Promise<DungeonFeature>;
+interface DungeonAssetFormProps {
+  dungeonAsset?: DungeonAsset;
+  submitAction: (initialState: DungeonAsset, updateState: FormData) => Promise<DungeonAsset>;
 }
 
-const DungeonFeatureForm: React.FC<DungeonFeatureFormProps> = ({ dungeonFeature = {} as DungeonFeature, submitAction }) => {
+const DungeonAssetForm: React.FC<DungeonAssetFormProps> = ({ dungeonAsset = {} as DungeonAsset, submitAction }) => {
   return (
     <Form
-      data={dungeonFeature}
+      data={dungeonAsset}
       submitAction={submitAction}
       renderFormFields={(formData, handleChange) => (
         <Grid columns={2}>
@@ -54,16 +54,9 @@ const DungeonFeatureForm: React.FC<DungeonFeatureFormProps> = ({ dungeonFeature 
                 onChange={handleChange}
                 className="w-full p-2 mb-2 border rounded"
               >
-                <option value={DUNGEON_FEATURE_TYPES.DOOR}>Door</option>
-                <option value={DUNGEON_FEATURE_TYPES.HAZARD}>Hazard</option>
-                <option value={DUNGEON_FEATURE_TYPES.HIDDEN}>Hidden</option>
-                <option value={DUNGEON_FEATURE_TYPES.MONSTER_ENCOUNTER}>Monster Encounter</option>
-                <option value={DUNGEON_FEATURE_TYPES.NPC_ENCOUNTER}>NPC Encounter</option>
-                <option value={DUNGEON_FEATURE_TYPES.PASSAGE}>Passage</option>
-                <option value={DUNGEON_FEATURE_TYPES.PUZZLE}>Puzzle</option>
-                <option value={DUNGEON_FEATURE_TYPES.ROOM}>Room</option>
-                <option value={DUNGEON_FEATURE_TYPES.TRAP}>Trap</option>
-                <option value={DUNGEON_FEATURE_TYPES.TREASURE}>Treasure</option>
+                <option value="ENCOUNTER">Encounter</option>
+                <option value="HAZARD">Hazard</option>
+                <option value="TREASURE">Treasure</option>
               </select>
             )}
           />
@@ -95,34 +88,6 @@ const DungeonFeatureForm: React.FC<DungeonFeatureFormProps> = ({ dungeonFeature 
               />
             )}
           />
-          <div className="flex justify-between">
-            <FormItem
-              label="No Children"
-              renderFormElement={id => (
-                <input
-                  id={id}
-                  type="checkbox"
-                  name="noChildren"
-                  defaultChecked={formData.noChildren}
-                  onChange={handleChange}
-                  className="mr-2 mb-2"
-                />
-              )}
-            />
-            <FormItem
-              label="Must Have Parent"
-              renderFormElement={id => (
-                <input
-                  id={id}
-                  type="checkbox"
-                  name="mustHaveParent"
-                  defaultChecked={formData.mustHaveParent}
-                  onChange={handleChange}
-                  className="mr-2 mb-2"
-                />
-              )}
-            />
-          </div>
           <FormItem
             label="Child Whitelist"
             renderFormElement={id => (
@@ -134,7 +99,7 @@ const DungeonFeatureForm: React.FC<DungeonFeatureFormProps> = ({ dungeonFeature 
             )}
           />
           <FormItem
-            label="Child Features"
+            label="Child Assets"
             renderFormElement={id => (
               <select
                 id={id}
@@ -159,4 +124,4 @@ const DungeonFeatureForm: React.FC<DungeonFeatureFormProps> = ({ dungeonFeature 
   );
 };
 
-export default DungeonFeatureForm;
+export default DungeonAssetForm;

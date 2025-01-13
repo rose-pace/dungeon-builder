@@ -1,4 +1,4 @@
-import { Dungeon, DungeonFeature, DUNGEON_FEATURE_TYPES } from '@/types';
+import { Dungeon, DungeonAsset } from '@/types';
 import { IDataSet, IQueryParts } from './interfaces';
 import { criteriaSymbol, operatorSymbol, Operator } from '@/utils/data/queryUtils';
 
@@ -75,7 +75,7 @@ export default class MockDataSet<T> implements IDataSet<T> {
 
 interface DefaultState {
   dungeons: Dungeon[];
-  dungeonFeatures: DungeonFeature[];
+  dungeonAssets: DungeonAsset[];
 }
 const defaultState: DefaultState = {
   dungeons: [
@@ -83,9 +83,54 @@ const defaultState: DefaultState = {
     { slug: 'dragon-lair', name: 'Dragon Lair', description: 'A lair with a dragon.', id: '2', images: '', audio: '', campaignNotes: '', dmSecrets: '', zones: [], createdAt: new Date('2024-04-02T10:00:00Z').getTime() },
     { slug: 'undead-crypt', name: 'Undead Crypt', description: 'A crypt with undead creatures.', id: '3', images: '', audio: '', campaignNotes: '', dmSecrets: '', zones: [], createdAt: new Date('2024-08-03T10:00:00Z').getTime() },
   ],
-  dungeonFeatures: [
-    { id: '1', slug: 'enchanted-sword', name: 'Enchanted Sword', description: 'A sword with magical properties.', type: DUNGEON_FEATURE_TYPES.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [], createdAt: new Date('2023-10-01T10:00:00Z').getTime() },
-    { id: '2', slug: 'mystic-wand', name: 'Mystic Wand', description: 'A wand that can cast powerful spells.', type: DUNGEON_FEATURE_TYPES.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [], createdAt: new Date('2024-04-02T10:00:00Z').getTime() },
-    { id: '3', slug: 'portion-of-healing', name: 'Potion of Healing', description: 'A potion that heals wounds.', type: DUNGEON_FEATURE_TYPES.TREASURE, images: '', noChildren: false, mustHaveParent: false, childWhitelist: [], childFeatures: [], connections: [], createdAt: new Date('2024-08-03T10:00:00Z').getTime() },
+  dungeonAssets: [
+    {
+      id: '1',
+      slug: 'skeleton-ambush',
+      type: 'ENCOUNTER',
+      name: 'Skeleton Ambush',
+      description: `A group of skeletons ambush the party.
+      creatures: Skeleton (3), Skeleton Archer (2)
+      `,
+      images: '',
+      rollTable: undefined,
+      createdAt: new Date('2023-10-01T10:00:00Z').getTime(),
+    },
+    {
+      id: '2',
+      slug: 'poison-gas-trap',
+      type: 'HAZZARD',
+      name: 'Poison Gas Trap',
+      description: `A trap that releases poison gas when triggered.
+      effect: Poison
+      damage: 2d6
+      save: Constitution
+      difficulty: 15
+      `,
+      images: '',
+      rollTable: undefined,
+      createdAt: new Date('2023-10-01T10:00:00Z').getTime(),
+    },
+    {
+      id: '3',
+      slug: 'uncommon-magic-items',
+      type: 'TREASURE',
+      name: 'Uncommon Magic Items',
+      description: 'A chest containing an uncommon magic item.',
+      images: '',
+      rollTable: {
+        name: 'Uncommon Magic Items',
+        description: 'A roll table for generating uncommon magic items.',
+        dice: 10,
+        rollTableEntries: [
+          { dieRollTargets: [1, 2], description: 'Potion of Healing' },
+          { dieRollTargets: [3, 4], description: 'Ring of Protection' },
+          { dieRollTargets: [5, 6], description: 'Wand of Magic Missiles' },
+          { dieRollTargets: [7, 8], description: 'Cloak of Elvenkind' },
+          { dieRollTargets: [9, 10], description: 'Boots of Striding and Springing' },
+        ],
+      },
+      createdAt: new Date('2023-10-01T10:00:00Z').getTime(),
+    },
   ],
 };

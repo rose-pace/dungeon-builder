@@ -1,11 +1,11 @@
 import { IEntity } from './common';
-import { DUNGEON_FEATURE_TYPES } from './constants';
+import { RollTable } from './mechanics';
 
 export interface Connection {
   id: string;
   type: string;
   isHidden: boolean;
-  targetFeatureId: string;
+  targetAssetId: string;
 }
 
 export interface Dungeon extends IEntity {
@@ -19,22 +19,17 @@ export interface Dungeon extends IEntity {
   zones: Zone[];
 }
 
-export interface DungeonFeature extends IEntity {
+export interface DungeonAsset extends IEntity {
   slug: string;
-  type: DUNGEON_FEATURE_TYPES;
+  type: 'ENCOUNTER' | 'HAZZARD' | 'TREASURE';
   name: string;
   description: string;
   images: string;
-  noChildren: boolean;
-  mustHaveParent: boolean;
-  childWhitelist: DungeonFeature[];
-  childFeatures: DungeonFeature[];
-  connections: Connection[];
+  rollTable?: RollTable;
 }
 
 export interface Zone extends IEntity {
   name: string;
   description: string;
-  primaryRoom: DungeonFeature;
-  features: DungeonFeature[];
+  dungeonAssets: DungeonAsset[];
 }

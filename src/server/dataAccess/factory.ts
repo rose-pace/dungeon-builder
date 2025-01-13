@@ -1,4 +1,4 @@
-import { Dungeon, DungeonFeature, IEntity } from '@/types';
+import { Dungeon, DungeonAsset, IEntity } from '@/types';
 import { IDataContext, IDataSet, IRepository } from './interfaces';
 import MockDataSet from './MockDataSet';
 import { create, filter, find, update, deleteEntity } from './queryCommands';
@@ -14,7 +14,7 @@ const dataContextFactory = () => {
     case 'mock':
       return {
         dungeons: new MockDataSet<Dungeon>('dungeons'),
-        dungeonFeatures: new MockDataSet<DungeonFeature>('dungeonFeatures'),
+        dungeonAssets: new MockDataSet<DungeonAsset>('dungeonAssets'),
       } as IDataContext;
       // Add more cases here for other data sources
     default:

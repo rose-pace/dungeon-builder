@@ -1,4 +1,4 @@
-import { Dungeon, DungeonFeature } from '@/types';
+import { Dungeon, DungeonAsset } from '@/types';
 
 export interface IQueryParts<T> {
   entity: T;
@@ -15,7 +15,7 @@ export interface IDataSet<T> {
 
 export interface IDataContext {
   dungeons: IDataSet<Dungeon>;
-  dungeonFeatures: IDataSet<DungeonFeature>;
+  dungeonAssets: IDataSet<DungeonAsset>;
 }
 
 export interface IRepository<T> {

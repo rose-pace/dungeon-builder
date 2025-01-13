@@ -1,12 +1,12 @@
 import { dataContextFactory, repositoryFactory } from './dataAccess';
-import { Dungeon, DungeonFeature } from '@/types';
+import { Dungeon, DungeonAsset } from '@/types';
 
 const currentDataContext = dataContextFactory();
 // Create repositories
 const dungeonRepository = repositoryFactory<Dungeon>(currentDataContext.dungeons);
-const dungeonFeaturesRepository = repositoryFactory<DungeonFeature>(currentDataContext.dungeonFeatures);
+const dungeonAssetsRepository = repositoryFactory<DungeonAsset>(currentDataContext.dungeonAssets);
 
 export {
   dungeonRepository,
-  dungeonFeaturesRepository,
+  dungeonAssetsRepository,
 };
